@@ -13,8 +13,10 @@ function AirportInfo() {
     const [flights, setFlights] = useState([])
     const [showFlights,setShowFlights] = useState(false)
     const [outboundDate,setOutboundDate] = useState("")
+    const [inboundDate, setInboundDate] = useState("")
+    const [showInboundInput, setShowInboundInput] = useState(false)
     
-    function handleSubmit(e) {
+    function handleSubmit1(e) {
         e.preventDefault()
         if (outboundDate === "") setOutboundDate("anytime")
         async function fetchMyAPI() {
@@ -22,12 +24,37 @@ function AirportInfo() {
                 method: 'GET',
                 headers: {
                     "x-rapidapi-key": `${process.env.REACT_APP_API_KEY}`,
-                    "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-                    "useQueryString": true
+                    "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"
                 }
             }
             // let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/${originValue}/${destValue}/anytime?` + new URLSearchParams({inboundpartialdate: '%20'}), reqOptions)
             let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${originValue}/${destValue}/${outboundDate}`, reqOptions)
+            response = await response.json()
+            console.log(response)
+            setFlights(response.Quotes)
+            // setOriginPlaces(response.Places)
+        }
+        fetchMyAPI()
+
+        setShowFlights(true)
+        // setShowPlaces(true)
+        // setOrigin("")
+        // setDest("")
+    }
+
+    function handleSubmit2(e) {
+        e.preventDefault()
+        if (outboundDate === "") setOutboundDate("anytime")
+        if (inboundDate === "") setInboundDate("anytime")
+        async function fetchMyAPI() {
+            const reqOptions = {
+                method: 'GET',
+                headers: {
+                    "x-rapidapi-key": `${process.env.REACT_APP_API_KEY}`,
+                    "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"
+                }
+            }
+            let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${originValue}/${destValue}/${outboundDate}/${inboundDate}`, reqOptions)
             response = await response.json()
             console.log(response)
             setFlights(response.Quotes)
@@ -91,6 +118,22 @@ function AirportInfo() {
         getDestOptions()
     }
 
+    const InboundInput = () => {
+        return (
+            <div>
+                <label htmlFor="inboundDate">Return Date:</label>
+                <input 
+                    type="date" 
+                    id="inboundDate" 
+                    name="inboundDate"
+                    value={inboundDate}
+                    onChange={e => setInboundDate(e.target.value)}
+                    required
+                />
+            </div>
+        )
+    }
+
     function getDestOptions() {
         async function fetchMyAPI() {
             const reqOptions = {
@@ -118,10 +161,24 @@ function AirportInfo() {
             }
         })
     }
-    
+
+    var today = new Date()
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+
     return(
         <div className="airportinfo">
-            <form onSubmit={handleSubmit}>
+            <div id="tripType">
+                <button className="selected" id="oneWayButton"
+                    onClick={e => setShowInboundInput(false)}>
+                    One Way
+                </button>
+                <button className="deselected" id="roundtripButton"
+                    onClick={e => setShowInboundInput(true)}>
+                    Roundtrip
+                </button>
+            </div>
+
+            <form onSubmit={showInboundInput ? handleSubmit2 : handleSubmit1}>
                 <label htmlFor="originInput">Origin:</label>
                 <Select 
                     id="originInput"
@@ -141,16 +198,19 @@ function AirportInfo() {
                     isSearchable="true"
                     options={destPlaces}
                     placeholder="Where to?"
+                    required
                 />
-                <label htmlFor="outboundDate">Outbound Date</label>
+                <label htmlFor="outboundDate">Departure Date</label>
                 <input 
                     type="date" 
                     id="outboundDate" 
                     name="outboundDate"
                     value={outboundDate}
                     onChange={e => setOutboundDate(e.target.value)}
+                    required
                 />
-                <button className="search">Submit</button>
+                { showInboundInput ? <InboundInput /> : <></> }
+                <button className="search">Search</button>
             </form>
             { showFlights ? <Places flights={flights}></Places> : <></>}
         </div>
