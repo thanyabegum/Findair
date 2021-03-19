@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import AirportInfo from './components/AirportInfo.js';
-
+import AirportInfo from './components/AirportInfo';
+import Header from './components/Header'
 
 function App() {
   return (
     <div className="App">
-      <h1>We’ll Find You The Cheapest Flights</h1>
-      <AirportInfo></AirportInfo>
+      <Header title="Findair" />
+      <AirportInfo />
     </div>
   );
 }
