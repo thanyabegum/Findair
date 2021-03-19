@@ -244,7 +244,6 @@ function AirportInfo() {
                     One Way
                 </button>
             </div>
-            <SortSelect />
             <label htmlFor="currencySelect">Currency:</label>
             <Select 
                 id="currencySelect"
@@ -255,6 +254,7 @@ function AirportInfo() {
                 getOptionValue={({ Code }) => Code}
                 placeholder="Currency"
             />
+            { showFlights ? <SortSelect /> : <></> }
             { showFlights ? <Places flights={flights} /> : <></> }
         </div>
     )
