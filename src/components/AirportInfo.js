@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AirportInfo.css';
 import Places from './Places';
 import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 function AirportInfo() { 
     const [origin,setOrigin] = useState("")
@@ -12,13 +14,35 @@ function AirportInfo() {
     const [destValue, setDestValue] = useState("")
     const [flights, setFlights] = useState([])
     const [showFlights,setShowFlights] = useState(false)
-    const [outboundDate,setOutboundDate] = useState("")
-    const [inboundDate, setInboundDate] = useState("")
+    const [outboundDate,setOutboundDate] = useState(new Date())
+    const [inboundDate, setInboundDate] = useState(new Date())
     const [showInboundInput, setShowInboundInput] = useState(false)
+    const [currency, setCurrency] = useState("USD")
+    const [currencies, setCurrencies] = useState([])
+    const [sortAsc, setSortAsc] = useState(true)
+    const [sortType, setSortType] = useState([])
+
+    const sortOptions = [
+        { label: "Price: Low to High", value: "true" },
+        { label: "Price: High to Low", value: "false" }
+    ]
+
+    function toString(date) {
+        return date.getFullYear() + '-' + ((date.getMonth() + 1) < 10 ? 
+            '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + '-' + 
+            date.getDate()
+    }
     
-    function handleSubmit1(e) {
+    function handleSubmit(e) {
         e.preventDefault()
-        if (outboundDate === "") setOutboundDate("anytime")
+        let localOutboundDate, localInboundDate
+
+        if (!outboundDate) localOutboundDate = "anytime"
+        else localOutboundDate = toString(outboundDate)
+
+        if (!inboundDate) localInboundDate = "anytime"
+        else localInboundDate = toString(inboundDate)
+
         async function fetchMyAPI() {
             const reqOptions = {
                 method: 'GET',
@@ -27,50 +51,24 @@ function AirportInfo() {
                     "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"
                 }
             }
-            // let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/${originValue}/${destValue}/anytime?` + new URLSearchParams({inboundpartialdate: '%20'}), reqOptions)
-            let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${originValue}/${destValue}/${outboundDate}`, reqOptions)
+            let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/${currency}/en-US/${originValue}/${destValue}/${localOutboundDate}/?` + new URLSearchParams({inboundpartialdate: localInboundDate}), reqOptions)
             response = await response.json()
             console.log(response)
             setFlights(response.Quotes)
-            // setOriginPlaces(response.Places)
         }
-        fetchMyAPI()
 
+        fetchMyAPI()
         setShowFlights(true)
-        // setShowPlaces(true)
-        // setOrigin("")
-        // setDest("")
     }
 
-    function handleSubmit2(e) {
-        e.preventDefault()
-        if (outboundDate === "") setOutboundDate("anytime")
-        if (inboundDate === "") setInboundDate("anytime")
-        async function fetchMyAPI() {
-            const reqOptions = {
-                method: 'GET',
-                headers: {
-                    "x-rapidapi-key": `${process.env.REACT_APP_API_KEY}`,
-                    "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"
-                }
-            }
-            let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${originValue}/${destValue}/${outboundDate}/${inboundDate}`, reqOptions)
-            response = await response.json()
-            console.log(response)
-            setFlights(response.Quotes)
-            // setOriginPlaces(response.Places)
+    const handleOriginChange = (option, actionMeta) => {
+        if (actionMeta.action === "clear") {
+            setOrigin("")
+            setOriginValue("")
+        } else {
+            setOrigin(option.PlaceName)
+            setOriginValue(option.PlaceId)
         }
-        fetchMyAPI()
-
-        setShowFlights(true)
-        // setShowPlaces(true)
-        // setOrigin("")
-        // setDest("")
-    }
-
-    const handleOriginChange = selectedOption => {
-        setOrigin(selectedOption)
-        setOriginValue(selectedOption.value)
         getOriginOptions()
     }
 
@@ -89,49 +87,29 @@ function AirportInfo() {
                     "useQueryString": true
                 }
             }
-            let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?" + new URLSearchParams({query: origin }), reqOptions)
+            let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/${currency}/en-US/?` + new URLSearchParams({query: origin }), reqOptions)
             response = await response.json()
             console.log(response.Places)
-            return response
+            setOriginPlaces(response.Places)
         }
-        
-        fetchMyAPI().then(response => {
-            if (response.Places) {
-                const newPlaces = response.Places.map(item => {
-                    return { label: item.PlaceName, value: item.PlaceId };
-                });
-                console.log(newPlaces)
-                setOriginPlaces(newPlaces)
-                return newPlaces
-            }
-        })
+
+        fetchMyAPI()
     }
 
-    const handleDestChange = selectedOption => {
-        setDest(selectedOption)
-        setDestValue(selectedOption.value)
+    const handleDestChange = (option, actionMeta) => {
+        if (actionMeta.action === "clear") {
+            setDest("")
+            setDestValue("")
+        } else {
+            setDest(option.PlaceName)
+            setDestValue(option.PlaceId)
+        }
         getDestOptions()
     }
 
     const handleDestInputChange = inputValue => {
         setDest(inputValue)
         getDestOptions()
-    }
-
-    const InboundInput = () => {
-        return (
-            <div>
-                <label htmlFor="inboundDate">Return Date:</label>
-                <input 
-                    type="date" 
-                    id="inboundDate" 
-                    name="inboundDate"
-                    value={inboundDate}
-                    onChange={e => setInboundDate(e.target.value)}
-                    required
-                />
-            </div>
-        )
     }
 
     function getDestOptions() {
@@ -144,75 +122,140 @@ function AirportInfo() {
                     "useQueryString": true
                 }
             }
-            let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?" + new URLSearchParams({query: dest }), reqOptions)
+            let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/${currency}/en-US/?` + new URLSearchParams({query: dest }), reqOptions)
             response = await response.json()
             console.log(response.Places)
-            return response
+            setDestPlaces(response.Places)
         }
         
-        fetchMyAPI().then(response => {
-            if (response.Places) {
-                const newPlaces = response.Places.map(item => {
-                    return { label: item.PlaceName, value: item.PlaceId };
-                });
-                console.log(newPlaces)
-                setDestPlaces(newPlaces)
-                return newPlaces
-            }
-        })
+        fetchMyAPI()
     }
 
-    var today = new Date()
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-
-    return(
-        <div className="airportinfo">
-            <div id="tripType">
-                <button className="selected" id="oneWayButton"
-                    onClick={e => setShowInboundInput(false)}>
-                    One Way
-                </button>
-                <button className="deselected" id="roundtripButton"
-                    onClick={e => setShowInboundInput(true)}>
-                    Roundtrip
-                </button>
+    const InboundInput = () => {
+        return (
+            <div>
+                <label htmlFor="inboundDate">Return Date:</label>
+                <DatePicker 
+                    id="inboundDate"
+                    name="inboundDate"
+                    placeholderText="Returning?" 
+                    todayButton="Today"
+                    selected={inboundDate}
+                    onChange={date => setInboundDate(date)}
+                    required
+                />
             </div>
+        )
+    }
 
-            <form onSubmit={showInboundInput ? handleSubmit2 : handleSubmit1}>
+    const getCurrencies = () => {
+        async function fetchMyAPI() {
+            const reqOptions = {
+                method: 'GET',
+                headers: {
+                    "x-rapidapi-key": `${process.env.REACT_APP_API_KEY}`,
+                    "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+                    "useQueryString": true
+                }
+            }
+            let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/currencies", reqOptions)
+            response = await response.json()
+            setCurrencies(response.Currencies)
+        }
+        fetchMyAPI()
+    }
+
+    const SortSelect = () => {
+        const handleSortChange = option => {
+            option.value === sortAsc ? setFlights(flights) : setFlights(flights.slice().reverse())
+            setSortAsc(option.value)
+            setSortType(option)
+        }
+        
+        return (
+            <div>
+                <label htmlFor="sort">Sort:</label>
+                <Select 
+                    id="sort"
+                    name="sort"
+                    isSearchable="true"
+                    value={sortType}
+                    onChange={handleSortChange}
+                    options={sortOptions}
+                    placeholder="Sort"
+                />
+            </div>
+        )
+    }
+
+    useEffect(() => {
+        getCurrencies()
+    }, [])
+
+    return (
+        <div className="airportinfo">
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="originInput">Origin:</label>
                 <Select 
                     id="originInput"
-                    className="select"
+                    isClearable
+                    backspaceRemovesValue
                     onChange={handleOriginChange}
                     onInputChange={handleOriginInputChange}
-                    isSearchable="true"
                     options={originPlaces}
+                    getOptionLabel={({ PlaceName }) => PlaceName}
+                    getOptionValue={({ PlaceId }) => PlaceId}
                     placeholder="Where from?"
+                    filterOption={""}
                 />
                 <label htmlFor="destInput">Destination</label>
                 <Select 
-                    id="originInput"
-                    className="select"
+                    id="destInput"
+                    isClearable
+                    backspaceRemovesValue
                     onChange={handleDestChange}
                     onInputChange={handleDestInputChange}
-                    isSearchable="true"
                     options={destPlaces}
+                    getOptionLabel={({ PlaceName }) => PlaceName}
+                    getOptionValue={({ PlaceId }) => PlaceId}
                     placeholder="Where to?"
-                    required
+                    filterOption={""}
                 />
                 <label htmlFor="outboundDate">Departure Date</label>
-                <input 
-                    type="date" 
-                    id="outboundDate" 
+                <DatePicker 
+                    id="outboundDate"
                     name="outboundDate"
-                    value={outboundDate}
-                    onChange={e => setOutboundDate(e.target.value)}
+                    placeholderText="Departing?" 
+                    todayButton="Today"
+                    selected={outboundDate}
+                    onChange={date => setOutboundDate(date)}
                     required
                 />
                 { showInboundInput ? <InboundInput /> : <></> }
                 <button className="search">Search</button>
             </form>
-            { showFlights ? <Places flights={flights}></Places> : <></>}
+            <div id="tripType">
+                <button id="roundtripButton"
+                        onClick={e => setShowInboundInput(true)}>
+                        Roundtrip
+                </button>
+                <button id="oneWayButton"
+                    onClick={e => setShowInboundInput(false)}>
+                    One Way
+                </button>
+            </div>
+            <SortSelect />
+            <label htmlFor="currencySelect">Currency:</label>
+            <Select 
+                id="currencySelect"
+                defaultValue={{ Code: "USD" }}
+                onChange={(option) => setCurrency(option.Code)}
+                options={currencies}
+                getOptionLabel={({ Code }) => Code}
+                getOptionValue={({ Code }) => Code}
+                placeholder="Currency"
+            />
+            { showFlights ? <Places flights={flights} /> : <></> }
         </div>
     )
 }
