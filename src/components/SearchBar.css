@@ -1,8 +1,6 @@
-label {
-    color: white;
-}
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
-.visually-hidden {
+.visuallyHidden {
     border: 0;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -11,4 +9,73 @@ label {
     padding: 0;
     position: absolute;
     width: 1px;
-  }
+}
+
+.placeSelect {
+    width: 25vw;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    padding: 1vw;
+    border-radius: 6px;
+    margin-bottom: 2vh;
+}
+
+#searchOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#currencySelect {
+    width: 6vw;
+}
+
+#roundtrip {
+    margin-right: 1vw;
+}
+
+#rightOptions {
+    display: flex;
+    flex-direction: row;
+}
+
+#sortSelect {
+    width: 13vw;
+}
+
+.searchInput {
+    margin-right: 1vw;
+}
+
+button {
+    font-family: 'Mulish', sans-serif;
+    padding: 8px 12px;
+    border-color: transparent;
+    border-radius: 6px;
+    background-color: transparent;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    border: 1pt solid #b3b3b3;
+}
+
+#search {
+    background-color: #FCE205;
+    font-weight: 800;
+    color: black;
+    border: none;
+}
+
+#search:hover {
+    background-color: black;
+    color: #FCE205;
+}

@@ -63,6 +63,8 @@ function SearchBar() {
             response = await response.json()
             console.log(response)
             setFlights(response.Quotes)
+            setSortType(sortOptions[0])
+            setSortAsc(true)
         }
 
         fetchFlights()
@@ -152,8 +154,8 @@ function SearchBar() {
     /* Input for inbound date. Hidden until Roundtrip is selected */
     const InboundInput = () => {
         return (
-            <div id="inboundDateInput">
-                <label htmlFor="inboundDate" className="visually-hidden">Return Date:</label>
+            <div id="inboundDateInput" className="searchInput">
+                <label htmlFor="inboundDate" className="visuallyHidden">Return Date:</label>
                 <DatePicker 
                     id="inboundDate"
                     name="inboundDate"
@@ -179,12 +181,13 @@ function SearchBar() {
         
         return (
             <div>
-                <label htmlFor="sortSelect" className="visually-hidden">Sort:</label>
+                <label htmlFor="sortSelect" className="visuallyHidden">Sort:</label>
                 <Select 
                     id="sortSelect"
                     name="sortSelect"
                     isSearchable="true"
                     value={sortType}
+                    defaultValue={sortOptions[0]}
                     onChange={handleSortChange}
                     options={sortOptions}
                     placeholder="Sort"
@@ -197,10 +200,12 @@ function SearchBar() {
         <div className="searchBar">
             {/* Main Search Bar */}
             <form onSubmit={handleSubmit}>
-                <div id="originInput">
-                    <label htmlFor="originInput" className="visually-hidden">Origin:</label>
+                <div id="originInput" className="searchInput">
+                    <label htmlFor="originSelect" className="visuallyHidden">Origin:</label>
                     <Select 
                         id="originSelect"
+                        name="originSelect"
+                        className="placeSelect"
                         isClearable
                         backspaceRemovesValue
                         onChange={handleOriginChange}
@@ -212,10 +217,12 @@ function SearchBar() {
                         filterOption={""}
                     />
                 </div>
-                <div id="destInput">
-                    <label htmlFor="destInput" className="visually-hidden">Destination:</label>
+                <div id="destInput" className="searchInput">
+                    <label htmlFor="destSelect" className="visuallyHidden">Destination:</label>
                     <Select 
                         id="destSelect"
+                        name="destSelect"
+                        className="placeSelect"
                         isClearable
                         backspaceRemovesValue
                         onChange={handleDestChange}
@@ -227,8 +234,8 @@ function SearchBar() {
                         filterOption={""}
                     />
                 </div>
-                <div id="outboundDateInput">
-                    <label htmlFor="outboundDate" className="visually-hidden">Departure Date:</label>
+                <div id="outboundDateInput" className="searchInput">
+                    <label htmlFor="outboundDate" className="visuallyHidden">Departure Date:</label>
                     <DatePicker 
                         id="outboundDate"
                         name="outboundDate"
@@ -243,34 +250,39 @@ function SearchBar() {
                 <button id="search">Search</button>
             </form>
 
-            {/* Trip Type Buttons */}
-            <div id="tripType">
-                <button id="roundtripButton"
-                        onClick={e => setShowInboundInput(true)}>
-                        Roundtrip
-                </button>
-                <button id="oneWayButton"
-                    onClick={e => setShowInboundInput(false)}>
-                    One Way
-                </button>
-            </div>
+            <div id="searchOptions">
+                {/* Trip Type Buttons */}
+                <div id="leftOptions">
+                    <button id="roundtrip"
+                            onClick={e => setShowInboundInput(true)}>
+                            Roundtrip
+                    </button>
+                    <button id="oneWay"
+                        onClick={e => setShowInboundInput(false)}>
+                        One Way
+                    </button>
+                </div>
 
-            {/* Currency Picker */}
-            <div id="currency">
-                <label htmlFor="currencySelect" className="visually-hidden">Currency:</label>
-                <Select 
-                    id="currencySelect"
-                    defaultValue={{ Code: "USD" }}
-                    onChange={(option) => setCurrency(option.Code)}
-                    options={currencies}
-                    getOptionLabel={({ Code }) => Code}
-                    getOptionValue={({ Code }) => Code}
-                    placeholder="Currency"
-                />
-            </div>
+                <div id="rightOptions">
+                    {/* Sort Type Selector */}
+                    { showFlights ? <SortSelect /> : <></> }
 
-            {/* Sort Type Selector */}
-            { showFlights ? <SortSelect /> : <></> }
+                    {/* Currency Picker */}
+                    <div id="currency">
+                        <label htmlFor="currencySelect" className="visuallyHidden">Currency:</label>
+                        <Select 
+                            id="currencySelect"
+                            name="currencySelect"
+                            defaultValue={{ Code: "USD" }}
+                            onChange={(option) => setCurrency(option.Code)}
+                            options={currencies}
+                            getOptionLabel={({ Code }) => Code}
+                            getOptionValue={({ Code }) => Code}
+                            placeholder="Currency"
+                        />
+                    </div>
+                </div>
+            </div>
 
             {/* Flight List */}
             { showFlights ? <Places flights={flights} /> : <></> }

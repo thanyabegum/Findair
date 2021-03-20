@@ -7,7 +7,10 @@ function App() {
   return (
     <div className="App">
       <Header title="Findair" />
-      <SearchBar />
+      <div id="content">
+        <h1>We’ll Find You The <br /><span>Cheapest Flights</span></h1>
+        <SearchBar />
+      </div>
     </div>
   );
 }

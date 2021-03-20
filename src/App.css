@@ -1,3 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+
 body {
   background-image: url('./images/background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Mulish', sans-serif;
+}
+
+#content > h1 {
+  color: white;
+  font-size: 64px;
+  font-weight: 900;
+  padding-top: 5%;
+}
+
+.App {
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-top: 2%;
+}
+
+span {
+  color: #FCE205;
+}
+
+#content {
+  padding-left: 3%;
+  padding-right: 3%;
 }
