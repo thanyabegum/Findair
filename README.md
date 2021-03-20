@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Findair - Find Cheap Flights
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hosted on GitHub Pages, Findair is a React web application using Skyscanner API that helps travelers find the cheapest flight for their travel needs.
+Find your next flight at https://thanyabegum.github.io/Findair/
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+In the command line, run the following commands to obtain your own copy of Findair:
 
-### `npm start`
+1. Clone the repository with `git clone https://github.com/thanyabegum/Findair/`
+2. Change the current directory to Findair using `cd Findair`
+3. Run `npm install` to install the necessary packages
+4. Create a `.env` file in the Findair directory containing `REACT_APP_API_KEY=<sky-scanner-api-key>` where `<sky-scanner-api-key>` is replaced by your SkyScanner API key wrapped in double quotes ("").
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Now you'll be able to make Findair your own. See your changes by running `npm start` in the command line and going to `localhost:3000` in a browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+A few of the things you can do with Findair are:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Set your origin and destination using searchable dropdowns
+- Pick between Roundtrip or One Way trip types so you know exactly when you're departing and returning
+- Choose the currency of your flight prices if USD isn't your first choice
+- Sort your flight results by price and see them update in realtime
 
-### `npm run build`
+## What's Next?
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Despite all of Findair's amazing features, there's still more to do! In particular:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Add more details to flight results (e.g. origin, destination, time)
+- Include additional error handling
+- Ensure Findair is accessible and mobile responsive
+- Allow for swapping origin and destination or vice versa
+- Style inputs with icons (e.g. location pin, calendar icon)
+- Customize origin and destination dropdown options to include details about region/city
