@@ -3,6 +3,8 @@
 Hosted on GitHub Pages, Findair is a React web application using Skyscanner API that helps travelers find the cheapest flight for their travel needs.
 Find your next flight at https://thanyabegum.github.io/Findair/
 
+![Flight search app homepage with background image of the globe at night and a search bar.](./src/images/screenshot.jpg)
+
 ## Installation
 
 In the command line, run the following commands to obtain your own copy of Findair:
