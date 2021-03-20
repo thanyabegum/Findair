@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/skyscanner-app/static/css/main.0378a4d3.chunk.css",
-    "main.js": "/skyscanner-app/static/js/main.3e20bc52.chunk.js",
-    "main.js.map": "/skyscanner-app/static/js/main.3e20bc52.chunk.js.map",
-    "runtime-main.js": "/skyscanner-app/static/js/runtime-main.058431ff.js",
-    "runtime-main.js.map": "/skyscanner-app/static/js/runtime-main.058431ff.js.map",
-    "static/css/2.0cfad52a.chunk.css": "/skyscanner-app/static/css/2.0cfad52a.chunk.css",
-    "static/js/2.757e6056.chunk.js": "/skyscanner-app/static/js/2.757e6056.chunk.js",
-    "static/js/2.757e6056.chunk.js.map": "/skyscanner-app/static/js/2.757e6056.chunk.js.map",
-    "static/js/3.b33dae68.chunk.js": "/skyscanner-app/static/js/3.b33dae68.chunk.js",
-    "static/js/3.b33dae68.chunk.js.map": "/skyscanner-app/static/js/3.b33dae68.chunk.js.map",
-    "index.html": "/skyscanner-app/index.html",
-    "static/css/2.0cfad52a.chunk.css.map": "/skyscanner-app/static/css/2.0cfad52a.chunk.css.map",
-    "static/css/main.0378a4d3.chunk.css.map": "/skyscanner-app/static/css/main.0378a4d3.chunk.css.map",
-    "static/js/2.757e6056.chunk.js.LICENSE.txt": "/skyscanner-app/static/js/2.757e6056.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/skyscanner-app/static/media/background.4ed6da55.png",
-    "static/media/logo.24a3196b.svg": "/skyscanner-app/static/media/logo.24a3196b.svg"
+    "main.css": "/Findair/static/css/main.17cdea9b.chunk.css",
+    "main.js": "/Findair/static/js/main.0cddc025.chunk.js",
+    "main.js.map": "/Findair/static/js/main.0cddc025.chunk.js.map",
+    "runtime-main.js": "/Findair/static/js/runtime-main.6d0ccf1c.js",
+    "runtime-main.js.map": "/Findair/static/js/runtime-main.6d0ccf1c.js.map",
+    "static/css/2.0cfad52a.chunk.css": "/Findair/static/css/2.0cfad52a.chunk.css",
+    "static/js/2.55d88471.chunk.js": "/Findair/static/js/2.55d88471.chunk.js",
+    "static/js/2.55d88471.chunk.js.map": "/Findair/static/js/2.55d88471.chunk.js.map",
+    "static/js/3.547e4c49.chunk.js": "/Findair/static/js/3.547e4c49.chunk.js",
+    "static/js/3.547e4c49.chunk.js.map": "/Findair/static/js/3.547e4c49.chunk.js.map",
+    "index.html": "/Findair/index.html",
+    "static/css/2.0cfad52a.chunk.css.map": "/Findair/static/css/2.0cfad52a.chunk.css.map",
+    "static/css/main.17cdea9b.chunk.css.map": "/Findair/static/css/main.17cdea9b.chunk.css.map",
+    "static/js/2.55d88471.chunk.js.LICENSE.txt": "/Findair/static/js/2.55d88471.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/Findair/static/media/background.4ed6da55.png",
+    "static/media/logo.24a3196b.svg": "/Findair/static/media/logo.24a3196b.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.058431ff.js",
+    "static/js/runtime-main.6d0ccf1c.js",
     "static/css/2.0cfad52a.chunk.css",
-    "static/js/2.757e6056.chunk.js",
-    "static/css/main.0378a4d3.chunk.css",
-    "static/js/main.3e20bc52.chunk.js"
+    "static/js/2.55d88471.chunk.js",
+    "static/css/main.17cdea9b.chunk.css",
+    "static/js/main.0cddc025.chunk.js"
   ]
 }
