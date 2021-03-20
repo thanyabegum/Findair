@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './SearchBar.css';
-import Places from './Places';
+import Flights from './Flights';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -285,7 +285,7 @@ function SearchBar() {
             </div>
 
             {/* Flight List */}
-            { showFlights ? <Places flights={flights} /> : <></> }
+            { showFlights ? <Flights flights={flights}/> : <></> }
         </div>
     )
 }
